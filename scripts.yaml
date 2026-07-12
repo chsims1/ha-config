@@ -1,0 +1,42 @@
+shutdown_volumiofrontroom:
+  alias: shutdown_VolumioFrontRoom
+  sequence:
+    service: mqtt.publish
+    data:
+      topic: shutdown_VolumioFrontRoom
+      payload: test FrontRoom
+shutdown_volumiokitchen:
+  alias: shutdown_VolumioKitchen
+  sequence:
+    service: mqtt.publish
+    data:
+      topic: shutdown_VolumioKitchen
+      payload: test Kitchen
+shutdown_volumiostudy:
+  alias: shutdown_VolumioStudy
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: shutdown_VolumioStudy
+      payload: test Study
+shutdown_volumiobookroom:
+  alias: shutdown_VolumioBookRoom
+  sequence:
+    service: mqtt.publish
+    data:
+      topic: shutdown_VolumioBookRoom
+      payload: test Book Room
+shutdown_zaramon:
+  alias: shutdown_zaramon
+  sequence:
+    service: mqtt.publish
+    data:
+      topic: shutdown_zaramon
+      payload: test zaramon
+shutdown_study:
+  alias: shutdown_study
+  sequence:
+    service: mqtt.publish
+    data:
+      topic: shutdown_study
+      payload: test study

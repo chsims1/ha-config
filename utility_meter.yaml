@@ -1,0 +1,6 @@
+electricity_import_meter:
+  source: sensor.electricity_import_cumulative
+  cycle: daily
+  tariffs:
+    - peak
+    - offpeak

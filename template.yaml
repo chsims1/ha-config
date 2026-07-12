@@ -1,0 +1,34 @@
+######################################################## Electricity (also see MQTT.yaml ########################################################
+
+- sensor:
+    - name: "Electricity Current Rate"
+      unique_id: "electricity_current_rate"
+      unit_of_measurement: "p/kWh"
+      state: >
+        {% if now().hour >= 6 %}
+          28.11
+        {% else %}
+          9
+        {% endif %}
+
+    - name: "Electricity Peak Cost Today"
+      unique_id: "electricity_peak_cost_today"
+      unit_of_measurement: "GBP"
+      state: >
+        {{ ((states('sensor.electricity_import_meter_peak') | float(0)) * 0.2811) | round(2) }}
+
+    - name: "Electricity Off-Peak Cost Today"
+      unique_id: "electricity_offpeak_cost_today"
+      unit_of_measurement: "GBP"
+      state: >
+        {{ ((states('sensor.electricity_import_meter_offpeak') | float(0)) * 0.09) | round(2) }}
+
+    - name: "Electricity Total Cost Today"
+      unique_id: "electricity_total_cost_today"
+      unit_of_measurement: "GBP"
+      state: >
+        {{ (
+            (states('sensor.electricity_peak_cost_today') | float(0)) +
+            (states('sensor.electricity_off_peak_cost_today') | float(0)) +
+            0.60
+          ) | round(2) }}

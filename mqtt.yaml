@@ -1,0 +1,322 @@
+#################################### MQTT #######################################
+#  zigbee2mqtt
+#    permit_join: true
+#    server: mqtt://localhost:1883
+#    serial:
+#        port: /dev/ttyUSB0
+# Will run frontend on port 8080
+#    frontend: true 
+############################ Binary-Sensors #####################################
+#    binary_sensor:
+#      - state_topic: "StudyPC/WebPage_sync"
+#        name: "Sync_webpage"
+#        qos: 1
+#        payload_on: "TRUE"
+#        payload_off: "FALSE"
+#        device_class: connectivity
+
+#      - state_topic: "StudyPC/Maps_sync"
+#        name: "Sync_maps"
+#        qos: 1
+#        payload_on: "TRUE"
+#        payload_off: "FALSE"
+#        device_class: connectivity
+
+#      - state_topic: "StudyPC/Docs_sync"
+#        name: "Sync_docs"
+#        qos: 1
+#        payload_on: "TRUE"
+#        payload_off: "FALSE"
+#        device_class: connectivity
+###############################  Sensors ########################################
+    sensor:
+#########################  Colin Temperature   ##################################
+#      - name: "Colin T"
+#        state_topic: "colin/temp"
+#        unit_of_measurement: "°C"
+#########################  Hildebrand Glow Meter Reading  #######################
+######  Gas Sensor
+# Unit Cost
+      - name: "Gas Unit Cost"
+        unique_id: "gas_unit_cost"
+        state_topic: "glow/4C11AEADF328/SENSOR/gasmeter"
+        value_template: "£{{ (value_json['gasmeter']['energy']['import']['price']['unitrate']) | round(3) }}"
+# Standing Charge
+      - name: "Gas Standing Charge"
+        unique_id: "gas_standing_charge"
+        state_topic: "glow/4C11AEADF328/SENSOR/gasmeter"
+        value_template: "£{{ (value_json['gasmeter']['energy']['import']['price']['standingcharge']) | round(3) }}"
+# Gas Today 
+      - name: "Gas Today"
+        unique_id: "gas_today"
+        state_topic: "glow/4C11AEADF328/SENSOR/gasmeter"
+        value_template: "{{ (value_json['gasmeter']['energy']['import']['day'])  | round(3) }}"
+        unit_of_measurement: "kWh"
+        state_class: "total_increasing"
+        device_class: "energy"
+
+# Gas Today Cost
+      - name: "Gas Today Cost"
+        unique_id: "gas_today_cost"
+        state_topic: "glow/4C11AEADF328/SENSOR/gasmeter"
+        value_template: "£{{ ((value_json['gasmeter']['energy']['import']['day']) * (value_json['gasmeter']['energy']['import']['price']['unitrate']) + (value_json['gasmeter']['energy']['import']['price']['standingcharge'])) | round(2) }}"
+
+######  Electricity Sensor
+# Electricity Import Cumulative (never resets - needed for utility_meter)
+      - name: "Electricity Import Cumulative"
+        unique_id: "electricity_import_cumulative"
+        state_topic: "glow/4C11AEADF328/SENSOR/electricitymeter"
+        value_template: "{{ (value_json['electricitymeter']['energy']['import']['cumulative']) | round(3) }}"
+        unit_of_measurement: "kWh"
+        state_class: "total_increasing"
+        device_class: "energy"
+        force_update: true
+# Current Power Consumption
+      - name: "Electricity Grid Power"
+        unique_id: "electricity_grid_power"
+        state_topic: "glow/4C11AEADF328/SENSOR/electricitymeter"
+        value_template: "{{ (value_json['electricitymeter']['power']['value']) | round(5) }}"
+        unit_of_measurement: "kW"
+        state_class: "measurement"
+        device_class: "power"
+# Unit Cost
+      - name: "Electricity Unit Cost"
+        unique_id: "electricity_unit_cost"
+        state_topic: "glow/4C11AEADF328/SENSOR/electricitymeter"
+        value_template: "£{{ (value_json['electricitymeter']['energy']['import']['price']['unitrate']) | round(3) }}"
+
+# Standing Charge
+      - name: "Electricity Standing Charge"
+        unique_id: "electricity_standing_charge"
+        state_topic: "glow/4C11AEADF328/SENSOR/electricitymeter"
+        value_template: "£{{ (value_json['electricitymeter']['energy']['import']['price']['standingcharge']) | round(3) }}"
+
+# Electricity Today 
+      - name: "Electricity Import Today"
+        unique_id: "electricity_today"
+        state_topic: "glow/4C11AEADF328/SENSOR/electricitymeter"
+        value_template: "{{ (value_json['electricitymeter']['energy']['import']['day'])  | round(2) }}"
+        unit_of_measurement: "kWh"
+        state_class: "total_increasing"
+        device_class: "energy"
+        force_update: true
+
+# Electricity Export Cumulative
+      - name: "Electricity Export"
+        unique_id: "electricity_export"
+        state_topic: "glow/4C11AEADF328/SENSOR/electricitymeter"
+        value_template: "{{ (value_json['electricitymeter']['energy']['export']['cumulative'])  | round(1) }}"
+        unit_of_measurement: "kWh"
+        state_class: "total_increasing"
+        device_class: "energy"
+        
+
+######  OLD FIXED RATE TARIFF!!!             Electricity Sensor
+# Current Power Consumption
+#      - name: "Electricity Grid Power"
+#        unique_id: "electricity_grid_power"
+#        state_topic: "glow/4C11AEADF328/SENSOR/electricitymeter"
+#        value_template: "{{ (value_json['electricitymeter']['power']['value']) | round(5) }}"
+#        unit_of_measurement: "kW"
+#        state_class: "measurement"
+#        device_class: "power"
+# Unit Cost
+#      - name: "Electricity Unit Cost"
+#        unique_id: "electricity_unit_cost"
+#        state_topic: "glow/4C11AEADF328/SENSOR/electricitymeter"
+#        value_template: "£{{ (value_json['electricitymeter']['energy']['import']['price']['unitrate']) | round(3) }}"
+
+# Standing Charge
+#      - name: "Electricity Standing Charge"
+#        unique_id: "electricity_standing_charge"
+#        state_topic: "glow/4C11AEADF328/SENSOR/electricitymeter"
+#        value_template: "£{{ (value_json['electricitymeter']['energy']['import']['price']['standingcharge']) | round(3) }}"
+
+# Electricity Today 
+#      - name: "Electricity Import Today"
+#        unique_id: "electricity_today"
+#        state_topic: "glow/4C11AEADF328/SENSOR/electricitymeter"
+#        value_template: "{{ (value_json['electricitymeter']['energy']['import']['day'])  | round(2) }}"
+#        unit_of_measurement: "kWh"
+#        state_class: "total_increasing"
+#        device_class: "energy"
+#        force_update: true
+
+# Electricity Export Cumulative
+#      - name: "Electricity Export"
+#        unique_id: "electricity_export"
+#        state_topic: "glow/4C11AEADF328/SENSOR/electricitymeter"
+#        value_template: "{{ (value_json['electricitymeter']['energy']['export']['cumulative'])  | round(1) }}"
+#        unit_of_measurement: "kWh"
+#        state_class: "total_increasing"
+#        device_class: "energy"
+        
+# Electricity Today Cost
+#      - name: "Electricity Today Cost"
+#        unique_id: "electricity_today_cost"
+#        state_topic: "glow/4C11AEADF328/SENSOR/electricitymeter"
+#        force_update: true
+#        value_template: "£{{ ((value_json['electricitymeter']['energy']['import']['day']) * (value_json['electricitymeter']['energy']['import']['price']['unitrate']) + (value_json['electricitymeter']['energy']['import']['price']['standingcharge'])) | round(2) }}"
+
+#########################  Weather Variables  ###################################
+#  Temperature Outside
+      - name: "Weather Temp Out"
+        unique_id: "weather_temp_out"
+        state_topic: "weather"
+        value_template: '{{ value_json.OutdoorTemp }}'
+        unit_of_measurement: "°C"
+#  Temperature Inside    
+      - name: "Weather Temp In"
+        unique_id: "weather_temp_in"
+        state_topic: "weather"
+        value_template: '{{ value_json.IndoorTemp }}'
+        unit_of_measurement: "°C"
+#  Temperature Maximum    
+      - name: "Weather Temp Max"
+        unique_id: "weather_temp_max"
+        state_topic: "weather"
+        value_template: '{{ value_json.temp_out_max }}°C at {{ value_json.temp_out_max_t}}'
+#  Temperature Minimum
+      - name: "Weather Temp Min"
+        unique_id: "weather_temp_min"
+        state_topic: "weather"
+        value_template: '{{ value_json.temp_out_min }}°C at {{ value_json.temp_out_min_t}}'
+#  Rain Today
+      - name: "weather Rain"
+        unique_id: "weather_rain"
+        state_topic: "weather"
+        value_template: '{{ value_json.RainToday }}mm'
+#  Wind Average Speed & Direction  
+      - name: "Weather Wind"
+        unique_id: "weather_wind"
+        state_topic: "weather"
+        value_template: '{{ value_json.WindAverage }}mph from the {{ value_json.AVGBearing}}'
+#  Humidity Outside
+      - name: "Weather Humidity"
+        unique_id: "weather_humidity"
+        state_topic: "weather"
+        value_template: '{{ value_json.OutdoorHum }}'
+        unit_of_measurement: "%"
+#  Humidity Inside
+      - name: "Humidity Inside"
+        unique_id: "weather_humidity_in"
+        state_topic: "weather"
+        value_template: '{{ value_json.IndoorHum }}'
+        unit_of_measurement: "%"
+
+#  Time
+      - name: "Weather Reading Time"
+        unique_id: "weather_reading_time"
+        state_topic: "weather"
+        value_template: '{{ value_json.LastDataRead }}'
+########################   CPU Temperatures  ########################################################
+# VolumioFrontRoom
+      - name: VolumioFrontRoom_cpuT""
+        state_topic: "VolumioFrontRoom/cpuT"
+        expire_after: 60
+        unit_of_measurement: "°C"
+# VolumioKitchen
+      - name: "VolumioKitchen_cpuT"
+        state_topic: "VolumioKitchen/cpuT"
+        expire_after: 60
+        unit_of_measurement: "°C"
+# Web_server  
+      - name: "Web_server_cpuT"
+        state_topic: "Web_server/cpuT"
+        expire_after: 60
+        unit_of_measurement: "°C"
+# VolumioStudy  
+      - name: "VolumioStudy_cpuT"
+        state_topic: "VolumioStudy/cpuT"
+        expire_after: 60
+        unit_of_measurement: "°C"
+# VolumioBookRoom  
+      - name: "VolumioBookRoom_cpuT"
+        state_topic: "VolumioBookRoom/cpuT"
+        expire_after: 60
+        unit_of_measurement: "°C"
+# Zaramon
+      - name: "zaramon_cpuT"
+        state_topic: "zaramon/cpuT"
+        expire_after: 60
+        unit_of_measurement: "°C"
+  
+      - name: "zaramon_temp"
+        state_topic: "zaramon/temp"
+        expire_after: 60
+        unit_of_measurement: "°C"
+##################################### Room Temperatures ##################################
+#Conservatory
+      - name: "Conservatory Temperature"
+        state_topic: "Conservatory/BLE/TempHum"
+        value_template: '{{ value_json.temperature | round(1) }}'
+        unit_of_measurement: "°C"
+        expire_after: 120
+#FrontRoom
+      - name: "Front Room Temperature"
+        state_topic: "Frontroom/BLE/TempHum"
+        value_template: '{{ value_json.temperature | round(1) }}'
+        unit_of_measurement: "°C"
+        expire_after: 120
+
+#Hall
+      - name: "Hall Temperature"
+        state_topic: "Hall/BLE/TempHum"
+        value_template: '{{ value_json.temperature | round(1)}}'
+        unit_of_measurement: "°C"
+        expire_after: 120
+#Kitchen
+      - name: "Kitchen Temperature"
+        state_topic: "Kitchen/BLE/TempHum"
+        value_template: '{{ value_json.temperature | round(1)}}'
+        unit_of_measurement: "°C"
+        expire_after: 120
+#Bedroom_Sam
+      - name: "Bedroom_Sam Temperature"
+        state_topic: "Bedroom_Sam/BLE/TempHum"
+        value_template: '{{ value_json.temperature | round(1)}}'
+        unit_of_measurement: "°C"
+        expire_after: 120
+#Bedroom_Main
+      - name: "Bedroom_Main Temperature"
+        state_topic: "Bedroom_Main/BLE/TempHum"
+        value_template: '{{ value_json.temperature | round(1) }}'
+        unit_of_measurement: "°C"
+        expire_after: 120
+#Bedroom_Meg
+      - name: "Bedroom_Meg Temperature"
+        state_topic: "Bedroom_Meg/BLE/TempHum"
+        value_template: '{{ value_json.temperature | round(1) }}'
+        unit_of_measurement: "°C"
+        expire_after: 120
+#BLEMQTTGateway1
+      - name: "BLEMQTTGateway1 Temperature"
+        state_topic: "BLEMQTTGateway1/temperature"
+        value_template: '{{ value | round(1)}}'
+        unit_of_measurement: "°C"
+        expire_after: 120
+#Landing
+      - name: "Landing Temperature"
+        state_topic: "Landing/BLE/TempHum"
+        value_template: '{{ value_json.temperature | round(1)}}'
+        unit_of_measurement: "°C"
+        expire_after: 120
+#Back Door
+      - name: "Back Door Temperature"
+        state_topic: "Back_Door/BLE/TempHum"
+        value_template: '{{ value_json.temperature | round(1)}}'
+        unit_of_measurement: "°C"
+        expire_after: 120
+
+###################################### InfluxDB Size  ###################################
+
+      - name: InfluxDB DB Size
+        unit_of_measurement: "MB"
+        icon: hass:chart-line
+        state_topic: "influxdbsize"
+        value_template: "{{ (value.split('\t')[0]|int(0)/1000)|round(3) }}"
+##################################### Colin ##############################################
+#      - state_topic: "colin/temp"
+#        name: "colin_temp"
+#        expire_after: 60
+#        unit_of_measurement: "°C"

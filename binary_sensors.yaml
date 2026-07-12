@@ -1,0 +1,32 @@
+################ Ping definition in yaml deprecated (automatically incorporated in UI??)  ###############
+
+#- platform: ping
+#  host: 192.168.2.224
+#  name: VolumioStudy
+#  count: 2
+#  scan_interval: 60
+
+
+#- platform: ping
+#  host: 192.168.2.222
+#  name: VolumioKitchen
+#  count: 2
+#  scan_interval: 60
+
+#- platform: ping
+#  host: 192.168.2.220
+#  name: VolumioBookRoom
+#  count: 2
+#  scan_interval: 60
+
+#- platform: ping
+#  host: 192.168.2.230
+#  name: Zaramon
+#  count: 2
+#  scan_interval: 60
+  
+#- platform: ping
+#  host: 192.168.2.228
+#  name: VolumioFrontRoom
+#  count: 2
+#  scan_interval: 60

@@ -1,0 +1,21 @@
+# Secrets — never commit these
+secrets.yaml
+
+# Internal HA runtime state (tokens, registries, UI-created helpers)
+.storage/
+.cloud/
+.HA_VERSION
+.ha_run.lock
+
+# Databases
+*.db
+*.db-shm
+*.db-wal
+
+# Logs
+*.log
+*.log.*
+
+# Python cache
+__pycache__/
+deps/

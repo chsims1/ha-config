@@ -1,0 +1,160 @@
+###################################### Electricity Utility Meter ####################################################################
+- alias: "Electricity Tariff - Switch to Peak"
+  trigger:
+    - platform: time
+      at: "06:00:00"
+    - platform: homeassistant
+      event: start
+  condition:
+    - condition: time
+      after: "06:00:00"
+      before: "00:00:00"
+  action:
+    - service: select.select_option
+      target:
+        entity_id: select.electricity_import_meter
+      data:
+        option: peak
+
+- alias: "Electricity Tariff - Switch to Off-Peak"
+  trigger:
+    - platform: time
+      at: "00:00:00"
+    - platform: homeassistant
+      event: start
+  condition:
+    - condition: time
+      after: "00:00:00"
+      before: "06:00:00"
+  action:
+    - service: select.select_option
+      target:
+        entity_id: select.electricity_import_meter
+      data:
+        option: offpeak
+####################################################################################################################################
+- alias: Purge Database
+  initial_state: true
+  trigger:
+    platform: time
+    at: 02:22:22
+  action:
+    service: recorder.purge
+    data:
+      keep_days: 1
+      repack: true
+  id: 32d8212fdc5643c99d2863ccffd8100d
+- id: '1637404186180'
+  alias: Nightly Shutdown of Volumio SBCs
+  description: at 22:00
+  trigger:
+  - platform: time
+    at: '22:00'
+  condition: []
+  action:
+  - service: script.shutdown_volumiobookroom
+  - service: script.shutdown_volumiofrontroom
+  - service: script.shutdown_volumiokitchen
+  - service: script.shutdown_volumiostudy
+  mode: single
+- id: '1644835124292'
+  alias: Nightly Plugs Switch Off
+  description: BookRoom
+  trigger:
+  - platform: time
+    at: '22:05'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: cb583ddedd5aced5af0fcdf1e1ee2bde
+    entity_id: 8ae3861003439a51b72373df36aa7f00
+    domain: switch
+  - type: turn_off
+    device_id: 351bca100abb877b437731696c6300f3
+    entity_id: 22060a4a7170fb4d683ef49a23fa480f
+    domain: switch
+  - type: turn_off
+    device_id: e2be8d1c402bfaf51e3e1f2437815420
+    entity_id: f2f7d3d0f9e0b791fb2f41684fd57480
+    domain: switch
+  mode: single
+- id: '1670251711160'
+  alias: Study Plug On
+  description: ''
+  trigger:
+  - platform: time
+    at: 08:10:00
+  condition: []
+  action:
+  - type: turn_on
+    device_id: e2be8d1c402bfaf51e3e1f2437815420
+    entity_id: f2f7d3d0f9e0b791fb2f41684fd57480
+    domain: switch
+  mode: single
+- id: '1681123729907'
+  alias: FrontRoom TV Off
+  description: ''
+  trigger:
+  - platform: time
+    at: 01:30:00
+  - platform: time
+    at: 02:30:00
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 543c4a368fffce158d4a091220271d94
+    entity_id: b36da94f237faca45e05fe9f1b957a30
+    domain: switch
+  mode: single
+- id: '1681123802904'
+  alias: FrontRoom TV On
+  description: ''
+  trigger:
+  - platform: time
+    at: '16:59:00'
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 543c4a368fffce158d4a091220271d94
+    entity_id: b36da94f237faca45e05fe9f1b957a30
+    domain: switch
+  mode: single
+
+######################## Ohme Charger ############## Also see configuration.yaml
+
+- id: ohme_record_session_start
+  alias: "Ohme - Record session start energy"
+  trigger:
+    - trigger: state
+      entity_id: sensor.ohme_epod_energy
+  condition:
+    - condition: template
+      value_template: >
+        {{ trigger.from_state.state | float(0) == 0 and 
+           trigger.to_state.state | float(0) > 0 }}
+  action:
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.ohme_session_start_energy
+      data:
+        value: "{{ trigger.to_state.state | float(0) }}"
+
+- id: ohme_add_session_to_lifetime
+  alias: "Ohme - Add session energy to lifetime total"
+  trigger:
+    - trigger: state
+      entity_id: sensor.ohme_epod_energy
+  condition:
+    - condition: template
+      value_template: >
+        {{ trigger.from_state.state | float(0) > 0 and 
+           trigger.to_state.state | float(0) == 0 }}
+  action:
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.ohme_lifetime_energy
+      data:
+        value: >
+          {{ (states('input_number.ohme_lifetime_energy') | float(0)) + 
+             (trigger.from_state.state | float(0)) - 
+             (states('input_number.ohme_session_start_energy') | float(0)) }}

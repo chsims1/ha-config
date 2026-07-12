@@ -1,0 +1,6 @@
+# HA Server Temperature
+- sensor:
+    name: HA_cpuT
+    command: 'cat /sys/class/thermal/thermal_zone0/temp'
+    unit_of_measurement: "°C"
+    value_template: '{{ (value | multiply(0.001)) | round(1) }}'

@@ -1,0 +1,30 @@
+################################# Recorder service for saving sensor data
+recorder:
+  db_url: !secret mariadb_url
+  commit_interval: 60 ### store data every 60 s
+  purge_keep_days: 7 ### purge data older than 7 days
+
+  include:
+    entity_globs:
+      - sensor.particulate_matter*
+      - sensor.gas*
+      - sensor.electricity*
+      - sensor.net*
+      - sensor.sunsynk*
+################################# InfluxDB #####################################
+influxdb:  
+#  host: 192.168.2.205
+#  port: 8086
+#  database: InfluxDB
+#  username: homeassistant
+#  password: !secret influxdb_pass
+#  max_retries: 3
+#  default_measurement: state
+  include:
+    entity_globs:
+      - sensor.particulate_matter*
+      - sensor.gas*
+      - sensor.electricity*
+      - sensor.net*
+      - sensor.sunsynk*
+      - sensor.ohme_daily_charge*

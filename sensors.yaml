@@ -1,0 +1,88 @@
+
+
+
+###################################### Time-Date ##########################################
+- platform: time_date
+  display_options:
+     - 'time'
+     - 'date'
+     - 'date_time'
+     - 'date_time_utc'
+     - 'date_time_iso'
+     - 'time_date'
+     - 'time_utc'
+ #    - 'beat'
+##########################  UKHO Tides  ################################################################
+#- platform: ukho_tides
+#  api_key: d3840594de1e47e9ac32231d7f3a13db
+#  stations:
+#    - station_id: '0171'
+#      station_name: 'Spurn Head'
+#- platform: template
+#  sensors:
+#    next_high_tide_at:
+ #  entity_id: sensor.next_high
+#      friendly_name: "Next High Tide"
+#      value_template: "{{as_timestamp(state_attr('sensor.spurn_head_tide', 'next_high_tide_at')) | timestamp_custom('%H:%M')}}"
+#      icon_template: mdi:clock
+
+#    next_high_tide_in:
+#   entity_id: sensor.next_high_in
+#      friendly_name: "Next High Tide In"
+#      value_template: "{{state_attr('sensor.spurn_head_tide', 'next_high_tide_in')}}"
+#      icon_template: mdi:clock
+
+#    next_low_tide_at:
+#   entity_id: sensor.next_low
+#      friendly_name: "Next Low Tide"
+#      value_template: "{{as_timestamp(state_attr('sensor.spurn_head_tide', 'next_low_tide_at')) | timestamp_custom('%H:%M')}}"
+#      icon_template: mdi:clock
+     
+#    ukho_attribution:
+#   entity_id: sensor.tides_attibution
+#      value_template: "{{(state_attr('sensor.spurn_head_tide', 'attribution'))}}"
+
+  
+  ################################### Astronomical Variables ##############################
+###- platform: sun2
+###  monitored_conditions:
+#   - solar_midnight
+#   - astronomical_dawn
+#   - nautical_dawn
+###    - dawn
+###    - sunrise
+###    - solar_noon
+###    - sunset
+###    - dusk
+#   - nautical_dusk
+#   - astronomical_dusk
+###    - daylight
+#   - civil_daylight
+#   - nautical_daylight
+#   - astronomical_daylight
+#   - night
+#   - civil_night
+#   - nautical_night
+#   - astronomical_night
+###    - elevation
+#   - min_elevation
+###    - max_elevation
+    
+#   value_template:'{{ state_attr('sensor.sunrise', 'today').strftime('%H:%M') }}'
+###- platform: template
+###  sensors:
+###    dawn:
+###      unique_id: dawn_formatted123
+###      value_template: "{{as_timestamp(state_attr('sensor.dawn', 'today')) | timestamp_custom('%H:%M')}}"
+###    sunrise:
+###      unique_id: sunrise_formatted123
+###      value_template: "{{as_timestamp(state_attr('sensor.sunrise', 'today')) | timestamp_custom('%H:%M')}}"
+###    sunset:
+###      unique_id: sunset_formatted123
+###      value_template: "{{as_timestamp(state_attr('sensor.sunset', 'today')) | timestamp_custom('%H:%M')}}"
+###    dusk:
+###      unique_id: dusk_formatted123
+###      value_template: "{{as_timestamp(state_attr('sensor.dusk', 'today')) | timestamp_custom('%H:%M')}}"
+###    solarnoon:
+###      unique_id: solarnoon_formatted123
+###      value_template: "{{as_timestamp(state_attr('sensor.solar_noon', 'today')) | timestamp_custom('%H:%M')}}"
