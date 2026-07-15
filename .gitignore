@@ -19,3 +19,6 @@ secrets.yaml
 # Python cache
 __pycache__/
 deps/
+
+# ESPHome manages its own internal git repo — don't track it here
+esphome/
