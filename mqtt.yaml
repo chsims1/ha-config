@@ -30,10 +30,7 @@
 #        device_class: connectivity
 ###############################  Sensors ########################################
     sensor:
-#########################  Colin Temperature   ##################################
-#      - name: "Colin T"
-#        state_topic: "colin/temp"
-#        unit_of_measurement: "°C"
+
 #########################  Hildebrand Glow Meter Reading  #######################
 ######  Gas Sensor
 # Unit Cost
@@ -315,8 +312,3 @@
         icon: hass:chart-line
         state_topic: "influxdbsize"
         value_template: "{{ (value.split('\t')[0]|int(0)/1000)|round(3) }}"
-##################################### Colin ##############################################
-#      - state_topic: "colin/temp"
-#        name: "colin_temp"
-#        expire_after: 60
-#        unit_of_measurement: "°C"
