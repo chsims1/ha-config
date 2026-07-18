@@ -22,3 +22,8 @@ deps/
 
 # ESPHome manages its own internal git repo — don't track it here
 esphome/
+# HA's own generated icon cache — not source, regenerates automatically
+.cache/
+
+# HACS-managed custom integrations — HACS owns these, don't duplicate here
+custom_components/
