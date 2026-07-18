@@ -12,7 +12,7 @@ recorder:
       - sensor.net*
       - sensor.sunsynk*
 ################################# InfluxDB #####################################
-influxdb:  
+#influxdb:  
 #  host: 192.168.2.205
 #  port: 8086
 #  database: InfluxDB
@@ -20,11 +20,11 @@ influxdb:
 #  password: !secret influxdb_pass
 #  max_retries: 3
 #  default_measurement: state
-  include:
-    entity_globs:
-      - sensor.particulate_matter*
-      - sensor.gas*
-      - sensor.electricity*
-      - sensor.net*
-      - sensor.sunsynk*
-      - sensor.ohme_daily_charge*
+#  include:
+#    entity_globs:
+#      - sensor.particulate_matter*
+#      - sensor.gas*
+#      - sensor.electricity*
+#      - sensor.net*
+#      - sensor.sunsynk*
+#      - sensor.ohme_daily_charge*
