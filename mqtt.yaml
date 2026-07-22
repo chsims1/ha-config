@@ -163,11 +163,11 @@
         value_template: '{{ value_json.OutdoorTemp }}'
         unit_of_measurement: "°C"
 #  Temperature Inside    
-      - name: "Weather Temp In"
-        unique_id: "weather_temp_in"
-        state_topic: "weather"
-        value_template: '{{ value_json.IndoorTemp }}'
-        unit_of_measurement: "°C"
+#      - name: "Ecowitt Temp"
+#        unique_id: "ecowitt_temp"
+#        state_topic: "weather"
+#        value_template: '{{ value_json.IndoorTemp }}'
+#        unit_of_measurement: "°C"
 #  Temperature Maximum    
       - name: "Weather Temp Max"
         unique_id: "weather_temp_max"
@@ -195,8 +195,8 @@
         value_template: '{{ value_json.OutdoorHum }}'
         unit_of_measurement: "%"
 #  Humidity Inside
-      - name: "Humidity Inside"
-        unique_id: "weather_humidity_in"
+      - name: "Ecowitt Humidity"
+        unique_id: "ecowitt_humidity"
         state_topic: "weather"
         value_template: '{{ value_json.IndoorHum }}'
         unit_of_measurement: "%"
